@@ -23,8 +23,8 @@ def Hello(**params):
         query.equal_to('androidId', aid)
         query_list = query.find()
         if len(query_list) == 0:
-            androidId.set('androidId', params['androidId'])
-            return '添加成功'
+            ret = androidId.set('androidId', params['androidId'])
+            return '添加成功' + ret
         else:
             return '安卓Id已存在'
     else:
