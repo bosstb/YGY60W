@@ -30,11 +30,16 @@ def Hello(**params):
             androidId.set('androidId', aid)
             androidId.set('IP', ip)
             androidId.save()
-            r = requests.post(
-                "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
-                "Mobisummer&transaction_id=apk&sub_id=apk1&ip=xxx&country=xxx&install_time=xxx")
-            print r.text
-            return '添加成功'+ r.text
+            try:
+                r = requests.post(
+                    "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
+                    "Mobisummer&transaction_id=apk&sub_id=apk1&ip=xxx&country=xxx&install_time=xxx")
+            except Exception, e:
+                print Exception, ":", e
+                tip = e
+            else:
+                tip = r.text
+            return '添加成功'+ tip
         else:
             return '安卓Id已存在'
     else:
