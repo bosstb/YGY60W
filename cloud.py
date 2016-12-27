@@ -19,12 +19,14 @@ def Hello(**params):
     androidId = AndroidId()
     if 'androidId' in params:
         aid = params['androidId']
+        print aid
         query = leancloud.Query(AndroidId)
         query.equal_to('androidId', aid)
         query_list = query.find()
+        print len(query_list)
         if len(query_list) == 0:
-            ret = androidId.set('androidId', params['androidId'])
-            return '添加成功' + ret
+            androidId.set('androidId', aid)
+            return '添加成功'
         else:
             return '安卓Id已存在'
     else:
