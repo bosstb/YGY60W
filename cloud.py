@@ -8,11 +8,14 @@ from app import app
 
 
 engine = Engine(app)
+
+
 class AndroidId(leancloud.Object):
     pass
 
+
 @engine.define
-def postback(**params):
+def Hello(**params):
     androidId = AndroidId()
     if 'androidId' in params:
         aid = params['androidId']
