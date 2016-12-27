@@ -26,6 +26,7 @@ def Hello(**params):
         print len(query_list)
         if len(query_list) == 0:
             androidId.set('androidId', aid)
+            androidId.save()
             return '添加成功'
         else:
             return '安卓Id已存在'
