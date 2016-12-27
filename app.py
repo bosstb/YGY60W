@@ -19,6 +19,7 @@ app.register_blueprint(todos_view, url_prefix='/todos')
 @app.route('/')
 def index():
     ip = request.headers['x-real-ip']
+    print "ip = " + str(ip)
     return render_template('index.html')
 
 
