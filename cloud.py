@@ -2,19 +2,30 @@
 
 from leancloud import Engine
 from leancloud import LeanEngineError
+import leancloud
 
 from app import app
 
 
 engine = Engine(app)
-
+class AndroidId(leancloud.Object):
+    pass
 
 @engine.define
-def hello(**params):
-    if 'name' in params:
-        return 'Hello, {}!'.format(params['name'])
+def postback(**params):
+    androidId = AndroidId()
+    if 'androidId' in params:
+        aid = params['androidId']
+        query = leancloud.Query(AndroidId)
+        query.equal_to('androidId', aid)
+        query_list = query.find()
+        if len(query_list) == 0:
+            androidId.set('androidId', params['androidId'])
+            return '添加成功'
+        else:
+            return '安卓Id已存在'
     else:
-        return 'Hello, LeanCloud!'
+        return 'androidId missing'
 
 
 @engine.before_save('Todo')

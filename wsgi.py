@@ -10,9 +10,9 @@ import leancloud
 from app import app
 from cloud import engine
 
-APP_ID = os.environ['LEANCLOUD_APP_ID']
-APP_KEY = os.environ['LEANCLOUD_APP_KEY']
-MASTER_KEY = os.environ['LEANCLOUD_APP_MASTER_KEY']
+APP_ID = os.environ['cXKEoBOGIRk7ROEgGrKeGr3M-gzGzoHsz']
+APP_KEY = os.environ['etwstNBrSz5SnK3AhCzAcG5E']
+MASTER_KEY = os.environ['CXH8uAmrEnASxm1sWLoEBfAi']
 PORT = int(os.environ['LEANCLOUD_APP_PORT'])
 
 leancloud.init(APP_ID, app_key=APP_KEY, master_key=MASTER_KEY)
