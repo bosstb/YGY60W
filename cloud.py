@@ -8,6 +8,7 @@ from app import app
 
 
 engine = Engine(app)
+ip = ''
 
 
 class AndroidId(leancloud.Object):

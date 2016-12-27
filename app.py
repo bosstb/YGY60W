@@ -7,6 +7,8 @@ from flask import render_template
 from flask_sockets import Sockets
 
 from views.todos import todos_view
+from flask import request
+import cloud
 
 app = Flask(__name__)
 sockets = Sockets(app)
@@ -17,6 +19,8 @@ app.register_blueprint(todos_view, url_prefix='/todos')
 
 @app.route('/')
 def index():
+    ip = request.headers['x-real-ip']
+    cloud.ip = ip
     return render_template('index.html')
 
 
