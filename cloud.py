@@ -16,6 +16,7 @@ class AndroidId(leancloud.Object):
 
 @engine.define
 def Hello(**params):
+    print params
     androidId = AndroidId()
     if 'androidId' in params:
         aid = params['androidId']
