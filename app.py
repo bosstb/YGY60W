@@ -11,7 +11,7 @@ from flask import request
 
 app = Flask(__name__)
 sockets = Sockets(app)
-
+ip = ''
 # 动态路由
 app.register_blueprint(todos_view, url_prefix='/todos')
 
@@ -19,7 +19,6 @@ app.register_blueprint(todos_view, url_prefix='/todos')
 @app.route('/')
 def index():
     ip = request.headers['x-real-ip']
-    print ip
     return render_template('index.html')
 
 

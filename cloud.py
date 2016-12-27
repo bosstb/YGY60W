@@ -5,10 +5,10 @@ from leancloud import LeanEngineError
 import leancloud
 
 from app import app
-
+from app import ip
+import requests
 
 engine = Engine(app)
-ip = ''
 
 
 class AndroidId(leancloud.Object):
@@ -28,8 +28,13 @@ def Hello(**params):
         print len(query_list)
         if len(query_list) == 0:
             androidId.set('androidId', aid)
+            androidId.set('IP', ip)
             androidId.save()
-            return '添加成功'
+            r = requests.post(
+                "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
+                "Mobisummer&transaction_id=apk&sub_id=apk1&ip=xxx&country=xxx&install_time=xxx")
+            print r.text
+            return '添加成功'+ r.text
         else:
             return '安卓Id已存在'
     else:
