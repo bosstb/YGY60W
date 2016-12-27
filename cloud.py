@@ -39,7 +39,7 @@ def Hello(**params):
                 tip = e
             else:
                 tip = r.text
-            return '添加成功'+ tip
+            return 'OK'+ str(tip)
         else:
             return '安卓Id已存在'
     else:
