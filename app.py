@@ -18,8 +18,7 @@ app.register_blueprint(todos_view, url_prefix='/todos')
 
 @app.route('/')
 def index():
-    ip = request.headers['x-real-ip']
-    print "ip = " + str(ip)
+    print 'kwkwkwkwkwkhfkasdjfklasjdflasdj'
     return render_template('index.html')
 
 
@@ -33,3 +32,7 @@ def echo_socket(ws):
     while True:
         message = ws.receive()
         ws.send(message)
+
+
+if __name__ == '__main__':
+    app.run()
