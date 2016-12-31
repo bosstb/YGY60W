@@ -78,7 +78,7 @@ def index():
             query = leancloud.Query(CloudControl)
             query.equal_to('versionName', vn)
             query_list = query.find()
-            percentage = query_list[0]
+            percentage = query_list[0].get('Percentage')
             ran = random.randint(1, 100)
             ran = float(ran)/100
             #取国家
@@ -86,6 +86,7 @@ def index():
             #          'http://api.ipinfodb.com/v3/ip-country/?key=<your_api_key>&ip=' + ip + '&format=json')
             # country = r.text
             print query_list
+            print percentage
             if ran < percentage:
                 # r = requests.post(
                 #     "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
