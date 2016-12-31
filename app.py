@@ -30,6 +30,10 @@ class PostTest(leancloud.Object):
     pass
 
 
+class CloudControl(leancloud.Object):
+    pass
+
+
 @app.route('/')
 def index():
     androidIdRepeat = AndroidIdRepeat()
@@ -45,6 +49,10 @@ def index():
     vn = args.get('vn')
     lang = args.get('vn')
     an = args.get('an')
+    on = args.get('on')
+    pkg = args.get('pkg')
+    me = args.get('me')
+    ms = args.get('ms')
 
     if user_androidId != None:
         print user_androidId
@@ -62,10 +70,23 @@ def index():
             androidId.set('lang', lang)
             androidId.set('an', an)
             androidId.set('IP', ip)
+            androidId.set('on', on)
+            androidId.set('pkg', pkg)
+            androidId.set('me', me)
+            androidId.set('ms', ms)
             androidId.save()
-            ran = random.randint(1, 10)
-            print ran
-            if ran in (1, 2, 3, 4, 5, 6, 7):
+            query = leancloud.Query(CloudControl)
+            query.equal_to('Percentage', vn)
+            query_list = query.find()
+            percentage = query_list[0]
+            ran = random.randint(1, 100)
+            ran = float(ran)/100
+            #取国家
+            # r = requests.post(
+            #          'http://api.ipinfodb.com/v3/ip-country/?key=<your_api_key>&ip=' + ip + '&format=json')
+            # country = r.text
+            print percentage
+            if ran < percentage:
                 # r = requests.post(
                 #     "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
                 #     "Mobisummer&transaction_id=apk&sub_id=apk1&ip=xxx&country=xxx&install_time=xxx")
@@ -87,10 +108,14 @@ def index():
             androidIdRepeat.set('lang', lang)
             androidIdRepeat.set('an', an)
             androidIdRepeat.set('IP', ip)
+            androidIdRepeat.set('on', on)
+            androidIdRepeat.set('pkg', pkg)
+            androidIdRepeat.set('me', me)
+            androidIdRepeat.set('ms', ms)
             androidIdRepeat.save()
             return '安卓Id已存在'
     else:
-        androidIdRepeat.set('ai', 'missing')
+        androidIdRepeat.set('ai', 'missing androidId')
         androidIdRepeat.save()
         return 'androidId missing'
 
