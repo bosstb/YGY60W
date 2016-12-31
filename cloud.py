@@ -5,7 +5,6 @@ from leancloud import LeanEngineError
 import leancloud
 
 from app import app
-from app import ip
 import requests
 
 engine = Engine(app)
