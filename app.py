@@ -85,7 +85,7 @@ def index():
             # r = requests.post(
             #          'http://api.ipinfodb.com/v3/ip-country/?key=<your_api_key>&ip=' + ip + '&format=json')
             # country = r.text
-            print percentage
+            print query_list
             if ran < percentage:
                 # r = requests.post(
                 #     "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
