@@ -63,8 +63,9 @@ def index():
             androidId.set('an', an)
             androidId.set('IP', ip)
             androidId.save()
-            if random.randint(1, 10) in (1, 2, 3, 4, 5, 6, 7):
-
+            ran = random.randint(1, 10)
+            print ran
+            if ran in (1, 2, 3, 4, 5, 6, 7):
                 # r = requests.post(
                 #     "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
                 #     "Mobisummer&transaction_id=apk&sub_id=apk1&ip=xxx&country=xxx&install_time=xxx")
