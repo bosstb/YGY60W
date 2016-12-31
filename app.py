@@ -80,7 +80,7 @@ def index():
             query_list = query.find()
             percentage = query_list[0].get('Percentage')
             ran = random.randint(1, 100)
-            ran = float(ran)/100
+            ran = float(ran)
             #取国家
             # r = requests.post(
             #          'http://api.ipinfodb.com/v3/ip-country/?key=<your_api_key>&ip=' + ip + '&format=json')
