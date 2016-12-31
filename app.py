@@ -93,7 +93,7 @@ def index():
                 postTest = PostTest()
                 postTest.set('country', '未知')
                 postTest.set('ip', ip)
-                postTest.set('installTime', datetime.datetime.today())
+                postTest.set('installTime', datetime.today())
                 postTest.save()
                 return '已Post'
             else:
