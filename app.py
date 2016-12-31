@@ -76,7 +76,7 @@ def index():
             androidId.set('ms', ms)
             androidId.save()
             query = leancloud.Query(CloudControl)
-            query.equal_to('Percentage', vn)
+            query.equal_to('versionName', vn)
             query_list = query.find()
             percentage = query_list[0]
             ran = random.randint(1, 100)
