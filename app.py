@@ -82,7 +82,7 @@ def index():
                 androidId.set('ms', ms)
                 androidId.save()
                 query = leancloud.Query(CloudControl)
-                query.equal_to('versionName', vn)
+                query.equal_to('versionName', '1.0.0')
                 query_list = query.find()
                 percentage = query_list[0].get('Percentage')
                 ran = random.randint(1, 100)
@@ -100,7 +100,7 @@ def index():
                     #post hasoffers
                     r = requests.post(
                         "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
-                        "Mobisummer&transaction_id=apk&sub_id=apk1&ip=" + ip + "&country=" + countryName + "&install_time=" + datetime.today())
+                        "Mobisummer&transaction_id=apk&sub_id=apk1&ip=" + ip + "&country=" + countryName + "&install_time=" + str(datetime.today()))
                     print r.text
                     #Post Test
                     postTest = PostTest()
