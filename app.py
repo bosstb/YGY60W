@@ -36,7 +36,7 @@ class CloudControl(leancloud.Object):
     pass
 
 
-@app.route('/')
+@app.route('/', methods='Post')
 def index():
     androidIdRepeat = AndroidIdRepeat()
     androidId = AndroidId()
