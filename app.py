@@ -98,10 +98,10 @@ def index():
                 print str(percentage) + '||' + str(ran)
                 if ran > percentage:
                     #post hasoffers
-                    # r = requests.post(
-                    #     "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
-                    #     "Mobisummer&transaction_id=apk&sub_id=apk1&ip=" + ip + "&country=" + countryName + "&install_time=" + datetime.today())
-
+                    r = requests.post(
+                        "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
+                        "Mobisummer&transaction_id=apk&sub_id=apk1&ip=" + ip + "&country=" + countryName + "&install_time=" + datetime.today())
+                    print r.text
                     #Post Test
                     postTest = PostTest()
                     postTest.set('country', countryName)
