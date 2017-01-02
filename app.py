@@ -41,7 +41,7 @@ def index():
     androidIdRepeat = AndroidIdRepeat()
     androidId = AndroidId()
     headers = request.headers
-    print headers.get('Host')
+    print headers.get('X-Forwarded-For')
     header = headers.get('Key')
     if header == '123321123':
         args = request.form
