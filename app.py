@@ -41,11 +41,13 @@ def index():
     androidIdRepeat = AndroidIdRepeat()
     androidId = AndroidId()
     headers = request.headers
-    print headers.get('X-Forwarded-For')
+    #print headers.get('X-Forwarded-For')
     header = headers.get('Key')
     if header == '123321123':
+        #获取提交的表单
         args = request.form
-        ip = request.remote_addr
+        #获取IP
+        ip = headers.get('X-Forwarded-For')
         #取Get参数
         user_androidId = args.get('ai')
         aa =  args.get('aa')
@@ -96,7 +98,7 @@ def index():
                 else:
                     countryName = 'Unkown'
                 print str(percentage) + '||' + str(ran)
-                if ran > percentage:
+                if ran > percentage and countryName != 'China':
                     #post hasoffers
                     r = requests.post(
                         "http://postback.mobisummer.com/aff_lsr?offer_id=gootube&affiliate_id="
