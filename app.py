@@ -1,5 +1,5 @@
 # coding: utf-8
-#遗留问题：国家、Post、安全！！！！！！！！！！！！！！！！！！！！
+#遗留问题：IP会不会变：54.193.59.55
 
 
 from datetime import datetime
@@ -41,7 +41,7 @@ def index():
     androidIdRepeat = AndroidIdRepeat()
     androidId = AndroidId()
     headers = request.headers
-    print headers
+    print headers.get('HTTP_HOST')
     header = headers.get('Key')
     if header == '123321123':
         args = request.form
