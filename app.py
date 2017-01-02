@@ -41,7 +41,7 @@ def index():
     androidIdRepeat = AndroidIdRepeat()
     androidId = AndroidId()
     headers = request.headers
-    print headers.get('HTTP_HOST')
+    print headers.get('Host')
     header = headers.get('Key')
     if header == '123321123':
         args = request.form
