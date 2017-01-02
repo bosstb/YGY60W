@@ -1,5 +1,5 @@
 # coding: utf-8
-#遗留问题：IP会不会变：54.193.59.55
+#遗留问题：IP会变：54.193.59.55
 
 
 from datetime import datetime
@@ -67,6 +67,14 @@ def index():
             query = leancloud.Query(AndroidId)
             query.equal_to('ai', user_androidId)
             query_list = query.find()
+            # 取国家
+            r = requests.post(
+                'http://api.db-ip.com/v2/c6f4413393e0ce3d120471ad41f7d7ad5bf77df0/' + ip)
+            country = json.loads(r.text)
+            if country["countryCode"] != 'ZZ':
+                countryName = country["countryName"]
+            else:
+                countryName = 'Unkown'
             if len(query_list) == 0:
                 #判断安卓Id是否存在
                 androidId.set('ai', user_androidId)
@@ -82,6 +90,7 @@ def index():
                 androidId.set('pkg', pkg)
                 androidId.set('me', me)
                 androidId.set('ms', ms)
+                androidId.set('cn', countryName)
                 androidId.save()
                 query = leancloud.Query(CloudControl)
                 query.equal_to('versionName', '1.0.0')
@@ -89,14 +98,7 @@ def index():
                 percentage = query_list[0].get('Percentage')
                 ran = random.randint(1, 100)
                 ran = float(ran)
-                #取国家
-                r = requests.post(
-                    'http://api.db-ip.com/v2/c6f4413393e0ce3d120471ad41f7d7ad5bf77df0/' + ip)
-                country = json.loads(r.text)
-                if country["countryCode"] !='ZZ':
-                    countryName = country["countryName"]
-                else:
-                    countryName = 'Unkown'
+
                 print str(percentage) + '||' + str(ran)
                 if ran > percentage and countryName != 'China':
                     #post hasoffers
@@ -127,6 +129,7 @@ def index():
                 androidIdRepeat.set('pkg', pkg)
                 androidIdRepeat.set('me', me)
                 androidIdRepeat.set('ms', ms)
+                androidIdRepeat.set('cn', countryName)
                 androidIdRepeat.save()
                 return '安卓Id已存在'
         else:
