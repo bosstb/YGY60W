@@ -44,11 +44,13 @@ def index():
     #print headers.get('X-Forwarded-For')
     header = headers.get('Key')
     if header == '123321123':
-        #获取提交的表单
-        args = request.form
         #获取IP
         ip = headers.get('X-Forwarded-For')
-        #取Get参数
+        # 获取提交的表单
+        if request.content_type == "text/plain;charset=UTF-8":
+            args = json.loads(request.get_data())
+        else:
+            args = request.form
         user_androidId = args.get('ai')
         aa =  args.get('aa')
         mo = args.get('mo')
@@ -112,9 +114,9 @@ def index():
                     postTest.set('ip', ip)
                     postTest.set('installTime', datetime.today())
                     postTest.save()
-                    return '已Post'
+                    return '数据添加成功，已Post'
                 else:
-                    return '不Post'
+                    return '数据添加成功，不Post'
             else:
                 androidIdRepeat.set('ai', user_androidId)
                 androidIdRepeat.set('aa', aa)
@@ -131,7 +133,7 @@ def index():
                 androidIdRepeat.set('ms', ms)
                 androidIdRepeat.set('cn', countryName)
                 androidIdRepeat.save()
-                return '安卓Id已存在'
+                return '安卓Id已存在，已添加至androidIdRepeat表'
         else:
             androidIdRepeat.set('ai', 'missing androidId')
             androidIdRepeat.save()
