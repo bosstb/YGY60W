@@ -52,6 +52,7 @@ def index():
     # 获取IP
     headers = request.headers
     ip = headers.get('X-Forwarded-For')
+    #ip = '192.168.1.1'
     ua = str(request.user_agent)
     clickRecord = ClickRecord()
     if request.method == "GET":
@@ -61,14 +62,14 @@ def index():
         transaction_id = args.get("transaction_id")
         sub_id = args.get("sub_id")
         clickInfo = {"offer_id": offer_id, "affiliate_id": affiliate_id, "transaction_id": transaction_id,
-                     "sub_id": sub_id, "time": datetime.now()}
+                     "sub_id": sub_id, "time": datetime.today()}
         clickList[ip + '|' + ua] = clickInfo
         clickRecord.set('ipua', ip + '|' + ua)
         clickRecord.set('clickInfo', clickInfo)
         clickRecord.set('time', datetime.today())
         clickRecord.save()
         print clickList
-        return redirect("http://www.baidu.com", code=302)
+        return redirect("https://at.umeng.com/LfW9Xb?cid=483", code=302)
     else:
         androidIdRepeat = AndroidIdRepeat()
         androidId = AndroidId()
@@ -76,7 +77,9 @@ def index():
         key = headers.get('Key')
         if key == '123321123':
             #关联ClickInfo
-            clickInfo = clickList[ip + '|' + ua]
+            clickInfo = None
+            if clickList.has_key(ip + '|' + ua):
+                clickInfo = clickList[ip + '|' + ua]
             # 获取提交的表单
             if request.content_type == "text/plain;charset=UTF-8":
                 args = json.loads(request.get_data())
@@ -137,7 +140,7 @@ def index():
                     ran = float(ran)
                     print str(percentage) + '||' + str(ran)
                     #按比例扣量
-                    if ran > percentage and countryName != 'China':
+                    if ran > percentage and countryName != 'China' and clickInfo != None:
                         query = leancloud.Query(AffiliateSetting)
                         query.equal_to('name', affiliate)
                         query_list = query.find()
@@ -160,8 +163,9 @@ def index():
                                 postPara = postPara + '&country=' + countryName
                             elif para == 'install_time':
                                 postPara = postPara + '&install_time=' + str(datetime.today())
-
-                        r = requests.post(postLink + '?' + postPara[1, len(postPara)])
+                        url = postLink + '?' + postPara[1, len(postPara)]
+                        print 'url:' + url
+                        r = requests.post(url)
                         print r.text
                         #Post Test
                         postTest = PostTest()
