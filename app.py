@@ -53,7 +53,7 @@ def index():
     headers = request.headers
     ip = headers.get('X-Forwarded-For')
     #ip = '192.168.1.1'
-    ua = str(request.user_agent)
+    ua = request.user_agent
     clickRecord = ClickRecord()
     if request.method == "GET":
         args = request.args
