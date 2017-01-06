@@ -13,7 +13,7 @@ from flask import request
 import leancloud
 import requests
 
-leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
+#leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
 
 
 clickList = {}
@@ -69,19 +69,28 @@ def index():
     clickRecord = ClickRecord()
     if request.method == "GET":
         args = request.args
+        affiliate = args.get('af')
+        #根据渠道名称获取渠道信息，该渠道名称应以 af 参数配置到下载链接给渠道。
+        query = leancloud.Query(AffiliateSetting)
+        query.equal_to('name', affiliate)
+        query_list = query.find()
+        jumpLink = query_list[0].get('jumpLink')
+        postLink = query_list[0].get('postLink')
+        paras = str(query_list[0].get('parameters')).split(',')
+
         offer_id = args.get("offer_id")
         affiliate_id = args.get("affiliate_id")
         transaction_id = args.get("transaction_id")
         sub_id = args.get("sub_id")
         clickInfo = {"offer_id": offer_id, "affiliate_id": affiliate_id, "transaction_id": transaction_id,
-                     "sub_id": sub_id, "time": datetime.today()}
+                     "sub_id": sub_id, "time": datetime.today(), 'af': affiliate, 'postLink': postLink, 'paras': paras}
         clickList[str(ip) + '|' + ua] = clickInfo
         clickRecord.set('ipua', str(ip) + '|' + ua)
         clickRecord.set('clickInfo', clickInfo)
         clickRecord.set('time', datetime.today())
         clickRecord.save()
         print clickList
-        return redirect("https://at.umeng.com/LfW9Xb?cid=483", code=302)
+        return redirect(jumpLink, code=302)
     else:
         androidIdRepeat = AndroidIdRepeat()
         androidId = AndroidId()
@@ -97,7 +106,6 @@ def index():
                 args = json.loads(request.get_data())
             else:
                 args = request.form
-            affiliate = args.get('af')
             user_androidId = args.get('ai')
             aa =  args.get('aa')
             mo = args.get('mo')
@@ -154,11 +162,9 @@ def index():
                     print str(percentage) + '||' + str(ran)
                     #按比例扣量
                     if ran > percentage and countryName != 'China' and clickInfo != None and uas[1] == ' AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30':
-                        query = leancloud.Query(AffiliateSetting)
-                        query.equal_to('name', affiliate)
-                        query_list = query.find()
-                        postLink = query_list[0].get('postLink')
-                        paras = str(query_list[0].get('parameters')).split(',')
+                        #从ClickInfo解析渠道信息
+                        postLink = str(clickInfo['postLink'])
+                        paras = str(clickInfo['paras'])
                         #post
                         postPara = ''
                         for para in paras:
