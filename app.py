@@ -53,7 +53,19 @@ def index():
     headers = request.headers
     ip = headers.get('X-Forwarded-For')
     #ip = '192.168.1.1'
-    ua = request.user_agent
+    #UA格式化，取系统类型、版本，语言，平台，版本，手机型号作对比
+    uas = request.user_agent
+    ua = str(uas.__getattribute__("language")) + str(uas.__getattribute__('platform')) + str(uas.__getattribute__('version'))
+    uas = str('Mozilla/5.0 (Linux; Android 4.4.4; Che1-CL10 Build/Che1-CL10) AppleWebKit/537.36 (KHTML, like Gecko) '
+              'Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36').split(")", 1)
+    sys_type = uas[0].split(";")
+    for item in sys_type:
+        if item.find("ndroid") > 0:
+            ua = ua + item
+            break
+    ua = ua + sys_type[-1]
+
+
     clickRecord = ClickRecord()
     if request.method == "GET":
         args = request.args
@@ -63,8 +75,8 @@ def index():
         sub_id = args.get("sub_id")
         clickInfo = {"offer_id": offer_id, "affiliate_id": affiliate_id, "transaction_id": transaction_id,
                      "sub_id": sub_id, "time": datetime.today()}
-        clickList[ip + '|' + ua] = clickInfo
-        clickRecord.set('ipua', ip + '|' + ua)
+        clickList[str(ip) + '|' + ua] = clickInfo
+        clickRecord.set('ipua', str(ip) + '|' + ua)
         clickRecord.set('clickInfo', clickInfo)
         clickRecord.set('time', datetime.today())
         clickRecord.save()
@@ -78,8 +90,8 @@ def index():
         if key == '123321123':
             #关联ClickInfo
             clickInfo = None
-            if clickList.has_key(ip + '|' + ua):
-                clickInfo = clickList[ip + '|' + ua]
+            if clickList.has_key(str(ip) + '|' + ua):
+                clickInfo = clickList[str(ip) + '|' + ua]
             # 获取提交的表单
             if request.content_type == "text/plain;charset=UTF-8":
                 args = json.loads(request.get_data())
@@ -141,7 +153,7 @@ def index():
                     ran = float(ran)
                     print str(percentage) + '||' + str(ran)
                     #按比例扣量
-                    if ran > percentage and countryName != 'China' and clickInfo != None:
+                    if ran > percentage and countryName != 'China' and clickInfo != None and uas[1] == ' AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30':
                         query = leancloud.Query(AffiliateSetting)
                         query.equal_to('name', affiliate)
                         query_list = query.find()
@@ -159,7 +171,7 @@ def index():
                             elif para == 'sub_id':
                                 postPara = postPara + '&sub_id=' + str(clickInfo['sub_id'])
                             elif para == 'ip':
-                                postPara = postPara + '&ip=' + ip
+                                postPara = postPara + '&ip=' + str(ip)
                             elif para == 'country':
                                 postPara = postPara + '&country=' + countryName
                             elif para == 'install_time':
