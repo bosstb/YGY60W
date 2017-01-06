@@ -176,10 +176,10 @@ def index():
                                 postPara = postPara + '&country=' + countryName
                             elif para == 'install_time':
                                 postPara = postPara + '&install_time=' + str(datetime.today())
-                        url = postLink + '?' + postPara[1, len(postPara)]
+                        url = postLink + '?' + postPara[-len(postPara)-1:]
                         print 'url:' + url
                         r = requests.post(url)
-                        print r.text
+                        print r.text + 'Post结果。。我就草了'
                         #Post Test
                         postTest = PostTest()
                         postTest.set('country', countryName)
