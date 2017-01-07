@@ -55,7 +55,7 @@ def index():
     #ip = '192.168.1.1'
     #UA格式化，取系统类型、版本，语言，平台，版本，手机型号作对比
     uas = request.user_agent
-    ua = str(uas.__getattribute__("language")) + str(uas.__getattribute__('platform')) + str(uas.__getattribute__('version'))
+    ua =str(uas.__getattribute__('platform')) + str(uas.__getattribute__('version'))
     uas = str('Mozilla/5.0 (Linux; Android 4.4.4; Che1-CL10 Build/Che1-CL10) AppleWebKit/537.36 (KHTML, like Gecko) '
               'Version/4.0 Chrome/33.0.0.0 Mobile Safari/537.36').split(")", 1)
     sys_type = uas[0].split(";")
@@ -161,7 +161,8 @@ def index():
                     ran = float(ran)
                     print str(percentage) + '||' + str(ran)
                     #按比例扣量
-                    if ran > percentage and countryName != 'China' and clickInfo != None and uas[1] == ' AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30':
+                    #and countryName != 'China'
+                    if ran > percentage and clickInfo != None and uas[1] == ' AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30':
                         #从ClickInfo解析渠道信息
                         postLink = str(clickInfo['postLink'])
                         paras = str(clickInfo['paras'])
