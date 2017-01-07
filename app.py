@@ -186,6 +186,7 @@ def index():
                         print 'url:' + url
                         r = requests.post(url)
                         print r.text + 'Post结果。。我就草了'
+
                         #Post Test
                         postTest = PostTest()
                         postTest.set('country', countryName)
