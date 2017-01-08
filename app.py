@@ -186,7 +186,7 @@ def index():
                         url = postLink + '?' + postPara[-len(postPara)-1:]
                         print 'url:' + url
                         r = requests.post(url)
-                        print r.text + 'Post结果。。我就草了'
+                        print 'Post Result:' + r.text
                         del clickList[str(ip) + '|' + ua]
                         #Post Test
                         postTest = PostTest()
