@@ -3,6 +3,7 @@
 
 
 from datetime import datetime
+from datetime import timedelta
 import json
 from flask import Flask,redirect
 from flask import render_template
@@ -126,10 +127,13 @@ def index():
                 query_list = query.find()
                 # 取国家
                 r = requests.post(
-                    'http://api.db-ip.com/v2/c6f4413393e0ce3d120471ad41f7d7ad5bf77df0/' + ip)
+                    'http://api.db-ip.com/v2/c6f4413393e0ce3d120471ad41f7d7ad5bf77df0/' + str(ip))
                 country = json.loads(r.text)
-                if country["countryCode"] != 'ZZ':
-                    countryName = country["countryName"]
+                if r.text.find('error') == -1:
+                    if country["countryCode"] != 'ZZ':
+                        countryName = country["countryName"]
+                    else:
+                        countryName = 'Unkown'
                 else:
                     countryName = 'Unkown'
                 if len(query_list) == 0:
@@ -165,7 +169,7 @@ def index():
                     if ran > percentage and clickInfo != None and uas[1] == ' AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30':
                         #从ClickInfo解析渠道信息
                         postLink = str(clickInfo['postLink'])
-                        paras = str(clickInfo['paras']).split(',')
+                        paras = clickInfo['paras']
                         #post
                         postPara = ''
                         for para in paras:
@@ -183,7 +187,7 @@ def index():
                                 postPara = postPara + '&country=' + countryName
                             elif para == 'install_time':
                                 postPara = postPara + '&install_time=' + str(datetime.today())
-                        url = postLink + '?' + postPara[-len(postPara)-1:]
+                        url = postLink + '?' + postPara[-(len(postPara)-1):]
                         print 'url:' + url
                         r = requests.post(url)
                         print 'Post Result:' + r.text
@@ -226,12 +230,13 @@ def index():
 
 def clickListInit():
     query = leancloud.Query(ClickRecord)
-    query.greater_than('time', datetime.today()-3600)
+    query.greater_than('time', datetime.today()-timedelta(seconds=3600))
     query_list = query.find()
     for item in query_list:
-        clickList[item.get['ipua']] = dict(item.get['clickInfo'])
+        clickList[item.get('ipua')] = dict(item.get('clickInfo'))
 
 
+clickListInit()
 
 
 @app.route('/time')
@@ -248,4 +253,4 @@ def echo_socket(ws):
 
 if __name__ == '__main__':
     app.run('0.0.0.0')
-    clickListInit()
+
