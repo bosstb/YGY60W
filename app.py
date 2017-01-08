@@ -165,7 +165,7 @@ def index():
                     if ran > percentage and clickInfo != None and uas[1] == ' AppleWebKit/534.30 (KHTML, like Gecko) Version/4.0 Mobile Safari/534.30':
                         #从ClickInfo解析渠道信息
                         postLink = str(clickInfo['postLink'])
-                        paras = str(clickInfo['paras'])
+                        paras = str(clickInfo['paras']).split(',')
                         #post
                         postPara = ''
                         for para in paras:
