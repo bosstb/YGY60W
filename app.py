@@ -18,6 +18,7 @@ import requests
 
 
 clickList = {}
+clickListIsInit = False
 app = Flask(__name__)
 sockets = Sockets(app)
 # 动态路由
@@ -50,6 +51,9 @@ class AffiliateSetting(leancloud.Object):
 
 @app.route('/', methods=["GET", "POST"])
 def index():
+    #首次请求初始化ClickList
+    if clickListIsInit == False:
+        clickListInit()
     # 获取IP
     headers = request.headers
     ip = headers.get('X-Forwarded-For')
@@ -234,9 +238,7 @@ def clickListInit():
     query_list = query.find()
     for item in query_list:
         clickList[item.get('ipua')] = dict(item.get('clickInfo'))
-
-
-clickListInit()
+    clickListIsInit = True
 
 
 @app.route('/time')
