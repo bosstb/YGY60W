@@ -57,6 +57,9 @@ def index():
     # 获取IP
     headers = request.headers
     ip = headers.get('X-Forwarded-For')
+    # ip = '192.168.1.1,dlfkas'
+    if str(ip).find(',') > 0:
+        ip = str(ip).split(',')[0]
     #ip = '192.168.1.1'
     #UA格式化，取系统类型、版本，语言，平台，版本，手机型号作对比
     uas = request.user_agent
