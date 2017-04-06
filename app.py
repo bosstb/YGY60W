@@ -56,7 +56,7 @@ def index():
         clickListInit()
     # 获取IP
     headers = request.headers
-    ip = headers.get('X-Forwarded-For')
+    ip = request.remote_addr  #headers.get('X-Forwarded-For')
     # ip = '192.168.1.1,dlfkas'
     if str(ip).find(',') > 0:
         ip = str(ip).split(',')[0]
