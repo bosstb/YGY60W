@@ -56,6 +56,7 @@ def index():
         clickListInit()
     # 获取IP
     headers = request.headers
+    print request.access_route
     ip =  request.access_route[-1]
     # if request.headers.getlist("X-Forwarded-For"):
     #     ip = request.headers.getlist("X-Forwarded-For")[0]
