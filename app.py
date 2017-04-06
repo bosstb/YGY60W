@@ -14,7 +14,7 @@ from flask import request
 import leancloud
 import requests
 
-leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
+#leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
 
 
 clickList = {}
@@ -55,9 +55,9 @@ def index():
     if clickListIsInit == False:
         clickListInit()
     # 获取IP
-    headers = request.headers
-    print request.access_route
-    ip =  request.access_route[-1]
+    print request.headers['x-real-ip']
+    ip = request.headers['x-real-ip']
+    #ip =  request.access_route[-1]
     # if request.headers.getlist("X-Forwarded-For"):
     #     ip = request.headers.getlist("X-Forwarded-For")[0]
     # else:
