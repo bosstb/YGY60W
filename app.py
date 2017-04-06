@@ -55,16 +55,16 @@ def index():
     if clickListIsInit == False:
         clickListInit()
     # 获取IP
-    print request.headers['x-real-ip']
+    #print request.headers['x-real-ip']
+    headers = request.headers
     ip = request.headers['x-real-ip']
     #ip =  request.access_route[-1]
     # if request.headers.getlist("X-Forwarded-For"):
     #     ip = request.headers.getlist("X-Forwarded-For")[0]
     # else:
     #     ip = request.remote_addr
-    if str(ip).find(',') > 0:
-        ip = str(ip).split(',')[0]
-    #ip = '192.168.1.1'
+    # if str(ip).find(',') > 0:
+    #     ip = str(ip).split(',')[0]
     #UA格式化，取系统类型、版本，语言，平台，版本，手机型号作对比
     uas = request.user_agent
     ua = str(uas.__getattribute__('platform'))
