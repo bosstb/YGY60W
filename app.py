@@ -75,8 +75,8 @@ def index():
         if item.find("ndroid") > 0:
             ua = ua + item
             break
-    ss = sys_type[-1].split('-')
-    ua = ua + ss[-1]
+    # ss = sys_type[-1].split('-')
+    # ua = ua + ss[-1]
 
 
     clickRecord = ClickRecord()
