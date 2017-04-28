@@ -14,7 +14,7 @@ from flask import request
 import leancloud
 import requests
 
-#leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
+leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
 
 
 clickList = {}
@@ -57,7 +57,7 @@ def index():
     # 获取IP
     #print request.headers['x-real-ip']
     headers = request.headers
-    ip = request.headers['x-real-ip']
+    ip = 1#request.headers['x-real-ip']
     #ip =  request.access_route[-1]
     # if request.headers.getlist("X-Forwarded-For"):
     #     ip = request.headers.getlist("X-Forwarded-For")[0]
@@ -67,7 +67,8 @@ def index():
     #     ip = str(ip).split(',')[0]
     #UA格式化，取系统类型、版本，语言，平台，版本，手机型号作对比
     uas = request.user_agent
-    ua = str(uas.__getattribute__('platform'))
+    ua = str(uas.get('platform'))
+    print ua
     uas = str(uas).split(")", 1)
     sys_type = uas[0].split(";")
     for item in sys_type:
