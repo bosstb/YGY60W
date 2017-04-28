@@ -67,7 +67,7 @@ def index():
     #     ip = str(ip).split(',')[0]
     #UA格式化，取系统类型、版本，语言，平台，版本，手机型号作对比
     uas = request.user_agent
-    ua = str(uas.get('platform'))
+    ua = str(uas.__getattribute__('platform'))
     print ua
     uas = str(uas).split(")", 1)
     sys_type = uas[0].split(";")
