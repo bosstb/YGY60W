@@ -14,7 +14,7 @@ from flask import request
 import leancloud
 import requests
 
-leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
+'leancloud.init("96Q4GMOz0VpK4JwfeUjEHNWC-MdYXbMMI", "aCAfwt702pPeubx6tnngUWiu")
 
 
 clickList = {}
@@ -203,7 +203,10 @@ def index():
                                 postPara = postPara + '&country=' + countryName
                             elif para == 'install_time':
                                 postPara = postPara + '&install_time=' + str(datetime.today())
-                        url = postLink + '?' + postPara[-(len(postPara)-1):]
+                        if postLink.find("?") > 0:
+                            url = postLink + '&' + postPara[-(len(postPara) - 1):]
+                        else:
+                            url = postLink + '?' + postPara[-(len(postPara)-1):]
                         print 'url:' + url
                         r = requests.post(url)
                         print 'Post Result:' + r.text
