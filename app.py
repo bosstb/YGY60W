@@ -181,6 +181,7 @@ def index():
                     if ran > percentage and clickInfo != None:
                         #从ClickInfo解析渠道信息
                         postLink = str(clickInfo['postLink'])
+                        af = str(clickInfo['af']) #取渠道名称
                         paras = clickInfo['paras']
                         #post
                         postPara = ''
@@ -207,6 +208,8 @@ def index():
                             url = postLink + '&' + postPara[-(len(postPara) - 1):]
                         else:
                             url = postLink + '?' + postPara[-(len(postPara)-1):]
+                        if af =='ecomobi':
+                            url = url + '&adv=Mary'
                         print 'url:' + url
                         r = requests.post(url)
                         print 'Post Result:' + r.text
