@@ -68,7 +68,7 @@ def index():
     #UA格式化，取系统类型、版本，语言，平台，版本，手机型号作对比
     uas = request.user_agent
     ua = str(uas.__getattribute__('platform'))
-    print uas
+    #print uas
     uas = str(uas).split(")", 1)
     sys_type = uas[0].split(";")
     for item in sys_type:
@@ -102,7 +102,7 @@ def index():
         clickRecord.set('clickInfo', clickInfo)
         clickRecord.set('time', datetime.today())
         clickRecord.save()
-        print clickList
+        #print clickList
         return redirect(jumpLink, code=302)
     else:
         androidIdRepeat = AndroidIdRepeat()
