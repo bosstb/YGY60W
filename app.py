@@ -192,8 +192,10 @@ def index():
                                 postPara = postPara + '&affiliate_id=' + str(clickInfo['affiliate_id'])
                             elif para == 'transaction_id':
                                 postPara = postPara + '&transaction_id=' + str(clickInfo['transaction_id'])
-                            elif para == 'click_id' or para == 'cid':
+                            elif para == 'click_id':
                                 postPara = postPara + '&click_id=' + str(clickInfo['transaction_id'])
+                            elif  para == 'cid':
+                                postPara = postPara + '&cid=' + str(clickInfo['transaction_id'])
                             elif para == 'actionData':
                                 postPara = postPara + '&actionData=' + str(clickInfo['transaction_id'])
                             elif para == 'sub_id':
