@@ -211,7 +211,7 @@ def index():
                         else:
                             url = postLink + '?' + postPara[-(len(postPara)-1):]
                         if af =='ecomobi':
-                            url = url + '&adv=Mary'
+                            url = url + '&adv=avosapps'
                         print 'url:' + url
                         r = requests.post(url)
                         print 'Post Result:' + r.text
